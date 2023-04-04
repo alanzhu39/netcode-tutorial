@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode.Transports.UTP;
 
 namespace HelloWorld
 {
@@ -24,9 +25,32 @@ namespace HelloWorld
 
         static void StartButtons()
         {
-            if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-            if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
-            if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+            if (GUILayout.Button("Client"))
+            {
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
+                    "169.229.103.126",
+                    (ushort)12345
+                );
+                NetworkManager.Singleton.StartClient();
+            }
+            if (GUILayout.Button("Host"))
+            {
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
+                    "169.229.103.126",
+                    (ushort)12345,
+                    "0.0.0.0"
+                );
+                NetworkManager.Singleton.StartHost();
+            }
+            if (GUILayout.Button("Server"))
+            {
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
+                    "169.229.103.126",
+                    (ushort)12345,
+                    "0.0.0.0"
+                );
+                NetworkManager.Singleton.StartServer();
+            }
         }
 
         static void StatusLabels()
